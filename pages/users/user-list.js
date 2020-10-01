@@ -7,20 +7,28 @@ import { users } from '../../util/database';
 import { toggleFollowUserInCookie } from '../../util/cookies';
 
 export default function UserList(props) {
-  const [usersWithFollowingData, setUsersWithFollowingData] = useState(
-    users.map((user) => {
-      // If the id of the user is in the
-      // array, then set following to true
-      // props.followingFromCookie = ['1', '2']
-
-      return {
-        ...user,
-        following: props.followingFromCookie.includes(user.id),
-      };
-    }),
+  const [followingFromCookie, setFollowingFromCookie] = useState(
+    props.followingFromCookie,
   );
 
-  // useEffect();
+  const [usersWithFollowingData, setUsersWithFollowingData] = useState(users);
+
+  // Update the users every time that the
+  // "following" value changes
+  useEffect(() => {
+    setUsersWithFollowingData(
+      users.map((user) => {
+        // If the id of the user is in the
+        // array, then set following to true
+        // followingFromCookie = ['1', '2']
+
+        return {
+          ...user,
+          following: followingFromCookie.includes(user.id),
+        };
+      }),
+    );
+  }, [followingFromCookie, setUsersWithFollowingData]);
 
   return (
     <Layout>
@@ -56,18 +64,7 @@ export default function UserList(props) {
                     // Save the "following" attribute of the user
                     // in the cookie
                     const following = toggleFollowUserInCookie(user.id);
-
-                    setUsersWithFollowingData(
-                      users.map((currentUser) => {
-                        // If the id of the user is in the
-                        // array, then set following to true
-                        // following = ['1', '2']
-                        return {
-                          ...currentUser,
-                          following: following.includes(currentUser.id),
-                        };
-                      }),
-                    );
+                    setFollowingFromCookie(following);
                   }
                 }
               >
