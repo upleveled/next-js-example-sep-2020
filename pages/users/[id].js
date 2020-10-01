@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Layout from '../../components/Layout';
-import { users } from '../../database';
+import { users } from '../../util/database';
 
 export default function User(props) {
   const user = users.find((currentUser) => {

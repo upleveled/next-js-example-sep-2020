@@ -1,9 +1,27 @@
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import nextCookies from 'next-cookies';
 import Layout from '../../components/Layout';
-import { users } from '../../database';
+import { users } from '../../util/database';
+import { toggleFollowUserInCookie } from '../../util/cookies';
 
-export default function UserList() {
+export default function UserList(props) {
+  const [usersWithFollowingData, setUsersWithFollowingData] = useState(
+    users.map((user) => {
+      // If the id of the user is in the
+      // array, then set following to true
+      // props.followingFromCookie = ['1', '2']
+
+      return {
+        ...user,
+        following: props.followingFromCookie.includes(user.id),
+      };
+    }),
+  );
+
+  // useEffect();
+
   return (
     <Layout>
       <Head>
@@ -13,7 +31,7 @@ export default function UserList() {
       <h1>User List</h1>
 
       <ul>
-        {users.map((user) => {
+        {usersWithFollowingData.map((user) => {
           return (
             <li key={user.id}>
               {/* Create a link to /users/:id */}
@@ -22,10 +40,62 @@ export default function UserList() {
                   {user.firstName} {user.lastName}
                 </a>
               </Link>
+
+              <button
+                style={{
+                  marginLeft: 15,
+                  background: '#ddd',
+                  borderRadius: 5,
+                  border: 0,
+                  padding: '8px 14px 8px 11px',
+                }}
+                onClick={
+                  // Any onClick functions will be only
+                  // run in the browser
+                  () => {
+                    // Save the "following" attribute of the user
+                    // in the cookie
+                    const following = toggleFollowUserInCookie(user.id);
+
+                    setUsersWithFollowingData(
+                      users.map((currentUser) => {
+                        // If the id of the user is in the
+                        // array, then set following to true
+                        // following = ['1', '2']
+                        return {
+                          ...currentUser,
+                          following: following.includes(currentUser.id),
+                        };
+                      }),
+                    );
+                  }
+                }
+              >
+                {user.following ? 'Unfollow' : 'Follow'}
+              </button>
             </li>
           );
         })}
       </ul>
     </Layout>
   );
+}
+
+export function getServerSideProps(context) {
+  // nextCookies reads from context.req.headers.cookie
+  const allCookies = nextCookies(context);
+
+  // Use "|| []" in order to use a default
+  // value, in case this is undefined
+  const following = allCookies.following || [];
+
+  return {
+    props: {
+      followingFromCookie: following,
+      // Serialization will error out
+      // on values such as:
+      // following: undefined,
+      // date: new Date(),
+    },
+  };
 }
