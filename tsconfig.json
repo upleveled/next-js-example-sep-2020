@@ -22,6 +22,12 @@
     "isolatedModules": true,
     "target": "es5"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "db-connect-example-node.mjs"
+  ],
   "exclude": ["node_modules"]
 }

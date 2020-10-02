@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import nextCookies from 'next-cookies';
 import Layout from '../../components/Layout';
-import { users } from '../../util/database';
 import { toggleFollowUserInCookie } from '../../util/cookies';
 
 export default function UserList(props) {
@@ -11,13 +10,15 @@ export default function UserList(props) {
     props.followingFromCookie,
   );
 
-  const [usersWithFollowingData, setUsersWithFollowingData] = useState(users);
+  const [usersWithFollowingData, setUsersWithFollowingData] = useState(
+    props.users,
+  );
 
   // Update the users every time that the
   // "following" value changes
   useEffect(() => {
     setUsersWithFollowingData(
-      users.map((user) => {
+      props.users.map((user) => {
         // If the id of the user is in the
         // array, then set following to true
         // followingFromCookie = ['1', '2']
@@ -28,7 +29,7 @@ export default function UserList(props) {
         };
       }),
     );
-  }, [followingFromCookie, setUsersWithFollowingData]);
+  }, [props.users, followingFromCookie, setUsersWithFollowingData]);
 
   return (
     <Layout>
@@ -78,7 +79,10 @@ export default function UserList(props) {
   );
 }
 
-export function getServerSideProps(context) {
+export async function getServerSideProps(context) {
+  const { getUsers } = await import('../../util/database');
+  const users = await getUsers();
+
   // nextCookies reads from context.req.headers.cookie
   const allCookies = nextCookies(context);
 
@@ -89,6 +93,7 @@ export function getServerSideProps(context) {
   return {
     props: {
       followingFromCookie: following,
+      users,
       // Serialization will error out
       // on values such as:
       // following: undefined,
