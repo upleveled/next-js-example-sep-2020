@@ -1,7 +1,11 @@
 import Head from 'next/head';
+import { useState } from 'react';
 import Layout from '../../components/Layout';
 
 export default function User(props) {
+  const [editingKey, setEditingKey] = useState(null);
+  const [firstName, setFirstName] = useState(props.user?.firstName);
+  const [lastName, setLastName] = useState(props.user?.lastName);
   // const user = users.find((currentUser) => {
   //   if (currentUser.id === props.id) {
   //     return true;
@@ -27,10 +31,100 @@ export default function User(props) {
       </Head>
       user id: {props.user.id}
       <br />
-      user firstName: {props.user.firstName}
+      <h2>user firstName</h2>
+      {editingKey === 'firstName' ? (
+        <input
+          value={firstName}
+          onChange={(event) => setFirstName(event.currentTarget.value)}
+        />
+      ) : (
+        firstName
+      )}{' '}
+      {editingKey !== 'firstName' ? (
+        <button
+          onClick={() => {
+            setEditingKey('firstName');
+          }}
+        >
+          edit
+        </button>
+      ) : (
+        <>
+          <button
+            onClick={() => {
+              setEditingKey(null);
+              // TODO: Save to server
+            }}
+          >
+            save
+          </button>{' '}
+          <button
+            onClick={() => {
+              setEditingKey(null);
+              setFirstName(props.user.firstName);
+            }}
+          >
+            cancel
+          </button>
+        </>
+      )}
       <br />
-      user lastName: {props.user.lastName}
+      <h2>user lastName</h2>
+      {editingKey === 'lastName' ? (
+        <input
+          value={lastName}
+          onChange={(event) => setLastName(event.currentTarget.value)}
+        />
+      ) : (
+        lastName
+      )}{' '}
+      {editingKey !== 'lastName' ? (
+        <button
+          onClick={() => {
+            setEditingKey('lastName');
+          }}
+        >
+          edit
+        </button>
+      ) : (
+        <>
+          <button
+            onClick={() => {
+              setEditingKey(null);
+              // TODO: Save to server
+            }}
+          >
+            save
+          </button>{' '}
+          <button
+            onClick={() => {
+              setEditingKey(null);
+              setLastName(props.user.lastName);
+            }}
+          >
+            cancel
+          </button>
+        </>
+      )}
       <br />
+      <br />
+      <button
+        onClick={() => {
+          const answer = window.confirm(
+            `Really delete user ${props.user.firstName} ${props.user.lastName}?`,
+          );
+          console.log('user answer', answer);
+        }}
+        style={{
+          background: 'red',
+          color: 'white',
+          padding: '7px 6px',
+          borderRadius: 4,
+          border: 0,
+        }}
+      >
+        delete user
+      </button>
     </Layout>
   );
 }
