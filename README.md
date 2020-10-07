@@ -8,6 +8,8 @@
 
 ## Database Setup
 
+Copy the `.env.example` file to a new file called `.env` (ignored from Git) and fill in the necessary information.
+
 Follow the instructions from the PostgreSQL step in [UpLeveled's System Setup Instructions](https://github.com/upleveled/system-setup/blob/master/readme.md).
 
 Then, connect to the built-in `postgres` database as administrator in order to create the database:
@@ -39,4 +41,18 @@ Then, to connect to the database using this new user, quit `psql` and reconnect:
 ```sh
 \q
 psql -U <user name> <database name>
+```
+
+### Running the migrations
+
+To set up the structure and the content of the database, run the migrations using Ley:
+
+```sh
+yarn migrate up
+```
+
+To reverse the last single migration, run:
+
+```sh
+yarn migrate down
 ```
