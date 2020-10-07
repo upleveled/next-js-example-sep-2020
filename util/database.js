@@ -13,7 +13,7 @@ const sql = postgres();
 
 export async function getUsers() {
   const users = await sql`
-    SELECT * from users;
+    SELECT * FROM users;
   `;
   return users.map(camelcaseKeys);
   // This is what it looks like without a library:
@@ -26,17 +26,47 @@ export async function getUsers() {
   // });
 }
 
-export const users = [
-  {
-    id: '1',
-    firstName: 'Karl',
-    lastName: 'Horky',
-    following: false,
-  },
-  {
-    id: '2',
-    firstName: 'Sabine',
-    lastName: 'Ballata',
-    following: false,
-  },
-];
+export async function getUserById(id) {
+  // Return undefined if the id is not
+  // in the correct format
+  if (!/^\d+$/.test(id)) return undefined;
+
+  const users = await sql`
+    SELECT * FROM users WHERE id = ${id};
+  `;
+
+  const camelcaseUsers = users.map(camelcaseKeys);
+  return camelcaseUsers[0];
+}
+
+export async function updateUserById(id, user) {
+  // Return undefined if the id is not
+  // in the correct format
+  if (!/^\d+$/.test(id)) return undefined;
+
+  const users = await sql`
+    UPDATE users
+      SET first_name = ${user.firstName}
+      WHERE id = ${id}
+      RETURNING *;
+  `;
+
+  const camelcaseUsers = users.map(camelcaseKeys);
+  return camelcaseUsers[0];
+}
+
+// Old static list of users
+// export const users = [
+//   {
+//     id: '1',
+//     firstName: 'Karl',
+//     lastName: 'Horky',
+//     following: false,
+//   },
+//   {
+//     id: '2',
+//     firstName: 'Sabine',
+//     lastName: 'Ballata',
+//     following: false,
+//   },
+// ];
