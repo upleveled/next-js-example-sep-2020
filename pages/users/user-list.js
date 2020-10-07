@@ -5,7 +5,18 @@ import nextCookies from 'next-cookies';
 import Layout from '../../components/Layout';
 import { toggleFollowUserInCookie } from '../../util/cookies';
 
-export default function UserList(props) {
+/** @typedef {{
+ *   id: string,
+ *   firstName: string,
+ *   lastName: string
+ * }} User */
+
+/** @typedef {{
+ *   followingFromCookie: string[],
+ *   users: User[],
+ * }} Props */
+
+export default function UserList(/** @type {Props} */ props) {
   const [followingFromCookie, setFollowingFromCookie] = useState(
     props.followingFromCookie,
   );
