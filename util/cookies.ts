@@ -7,7 +7,7 @@ export function getFollowingFromCookies() {
   return following;
 }
 
-export function toggleFollowUserInCookie(/** @type {string} */ id) {
+export function toggleFollowUserInCookie(id: string) {
   // ['1', '3']
   const following = getFollowingFromCookies();
 
@@ -16,9 +16,7 @@ export function toggleFollowUserInCookie(/** @type {string} */ id) {
   if (following.includes(id)) {
     // If the user id is already in the following
     // array, then remove it from the array
-    newFollowing = following.filter(
-      (/** @type {string} */ followed) => followed !== id,
-    );
+    newFollowing = following.filter((followed: string) => followed !== id);
   } else {
     // If the user id is not in the array,
     // add it to the array

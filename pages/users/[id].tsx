@@ -1,9 +1,18 @@
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
 import Layout from '../../components/Layout';
+import { User } from '../../util/types';
 
-export default function User(props) {
-  const [editingKey, setEditingKey] = useState(null);
+type Props = {
+  user: User
+}
+
+export default function SingleUser(props: Props) {
+  // Tell TypeScript that this state variable may also
+  // be a string in the future
+  const [editingKey, setEditingKey] = useState<string | null>(null);
+
   const [firstName, setFirstName] = useState(props.user?.firstName);
   const [lastName, setLastName] = useState(props.user?.lastName);
   // const user = users.find((currentUser) => {
@@ -131,7 +140,7 @@ export default function User(props) {
 
 // This is run by Next.js BEFORE the component
 // above is run, and passes in the props
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   // context = {
   //   query: { id: '1' },
   //   params: { id: '1' },
@@ -145,7 +154,7 @@ export async function getServerSideProps(context) {
   // TODO: Don't do this in getServerSideProps
   // updateUserById(id, { firstName: 'Evan' });
 
-  const props = {};
+  const props: {user?: User} = {};
   if (user) props.user = user;
 
   return {

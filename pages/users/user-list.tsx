@@ -4,19 +4,15 @@ import Link from 'next/link';
 import nextCookies from 'next-cookies';
 import Layout from '../../components/Layout';
 import { toggleFollowUserInCookie } from '../../util/cookies';
+import { User } from '../../util/types';
+import { GetServerSidePropsContext } from 'next';
 
-/** @typedef {{
- *   id: string,
- *   firstName: string,
- *   lastName: string
- * }} User */
+ type Props = {
+   followingFromCookie: string[],
+   users: User[]
+ }
 
-/** @typedef {{
- *   followingFromCookie: string[],
- *   users: User[],
- * }} Props */
-
-export default function UserList(/** @type {Props} */ props) {
+export default function UserList( props: Props) {
   const [followingFromCookie, setFollowingFromCookie] = useState(
     props.followingFromCookie,
   );
@@ -90,7 +86,7 @@ export default function UserList(/** @type {Props} */ props) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getUsers } = await import('../../util/database');
   const users = await getUsers();
 
