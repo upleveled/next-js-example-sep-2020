@@ -25,6 +25,7 @@
   },
   "include": [
     "next-env.d.ts",
+    "postgres.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",

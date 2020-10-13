@@ -5,8 +5,8 @@ import Layout from '../../components/Layout';
 import { User } from '../../util/types';
 
 type Props = {
-  user: User
-}
+  user: User;
+};
 
 export default function SingleUser(props: Props) {
   // Tell TypeScript that this state variable may also
@@ -60,9 +60,15 @@ export default function SingleUser(props: Props) {
       ) : (
         <>
           <button
-            onClick={() => {
+            onClick={async () => {
+              await fetch(`/api/users/${props.user.id}`, {
+                method: 'PATCH',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user: { firstName: firstName } }),
+              });
               setEditingKey(null);
-              // TODO: Save to server
             }}
           >
             save
@@ -118,11 +124,20 @@ export default function SingleUser(props: Props) {
       <br />
       <br />
       <button
-        onClick={() => {
+        onClick={async () => {
           const answer = window.confirm(
             `Really delete user ${props.user.firstName} ${props.user.lastName}?`,
           );
-          console.log('user answer', answer);
+
+          if (answer === true) {
+            await fetch(`/api/users/${props.user.id}`, { method: 'DELETE' });
+
+            // This is just a fast way of refreshing the information
+            //
+            // A better version would be to save the props.user to a
+            // separate state variable and then just set it here to null
+            window.location.reload();
+          }
         }}
         style={{
           background: 'red',
@@ -145,7 +160,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   //   query: { id: '1' },
   //   params: { id: '1' },
   // }
-  const id = context.query.id;
+  const id = context.query.id as string;
 
   // import { users } from '../../util/database';
   const { getUserById } = await import('../../util/database');
@@ -154,7 +169,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // TODO: Don't do this in getServerSideProps
   // updateUserById(id, { firstName: 'Evan' });
 
-  const props: {user?: User} = {};
+  const props: { user?: User } = {};
   if (user) props.user = user;
 
   return {
