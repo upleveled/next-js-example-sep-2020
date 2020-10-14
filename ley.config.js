@@ -2,4 +2,10 @@ const extractHerokuDatabaseEnvVars = require('./util/extractHerokuDatabaseEnvVar
 
 extractHerokuDatabaseEnvVars();
 
-module.exports = {};
+const options = {};
+
+if (process.env.NODE_ENV === 'production') {
+  options.ssl = { rejectUnauthorized: false };
+}
+
+module.exports = options;
