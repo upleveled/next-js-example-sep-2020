@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUsers, insertUser } from '../../../util/database';
 
+//
 export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse,
