@@ -4,6 +4,7 @@ import {
   deleteUserById,
   updateUserById,
 } from '../../../util/database';
+import { User } from '../../../util/types';
 
 export default async function handler(
   request: NextApiRequest,
@@ -17,7 +18,7 @@ export default async function handler(
     return response.end(JSON.stringify({ errors: 'Not found' }));
   }
 
-  let user = {};
+  let user: User | undefined | {} = {};
 
   if (request.method === 'GET') {
     user = await getUserById(userId);

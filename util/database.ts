@@ -28,7 +28,7 @@ export async function insertUser(user: User) {
     return undefined;
   }
 
-  const users = await sql`
+  const users = await sql<User[]>`
     INSERT INTO users
       (first_name, last_name, city)
     VALUES
@@ -40,7 +40,7 @@ export async function insertUser(user: User) {
 }
 
 export async function getUsers() {
-  const users = await sql`
+  const users = await sql<User[]>`
     SELECT * FROM users;
   `;
   return users.map((u) => camelcaseKeys(u));
@@ -59,7 +59,7 @@ export async function getUserById(id: string) {
   // in the correct format
   if (!/^\d+$/.test(id)) return undefined;
 
-  const users = await sql`
+  const users = await sql<User[]>`
     SELECT * FROM users WHERE id = ${id};
   `;
 
@@ -89,7 +89,7 @@ export async function updateUserById(id: string, user: User) {
   let users: User[] = [];
 
   if ('firstName' in user) {
-    users = await sql`
+    users = await sql<User[]>`
       UPDATE users
         SET first_name = ${user.firstName}
         WHERE id = ${id}
@@ -98,7 +98,7 @@ export async function updateUserById(id: string, user: User) {
   }
 
   if ('lastName' in user) {
-    users = await sql`
+    users = await sql<User[]>`
       UPDATE users
         SET last_name = ${user.lastName}
         WHERE id = ${id}
@@ -107,7 +107,7 @@ export async function updateUserById(id: string, user: User) {
   }
 
   if ('city' in user) {
-    users = await sql`
+    users = await sql<User[]>`
       UPDATE users
         SET city = ${user.city}
         WHERE id = ${id}
@@ -123,7 +123,7 @@ export async function deleteUserById(id: string) {
   // in the correct format
   if (!/^\d+$/.test(id)) return undefined;
 
-  const users = await sql`
+  const users = await sql<User[]>`
     DELETE FROM users
       WHERE id = ${id}
       RETURNING *;
