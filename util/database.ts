@@ -2,6 +2,9 @@ import postgres from 'postgres';
 import dotenv from 'dotenv';
 import camelcaseKeys from 'camelcase-keys';
 import { User } from './types';
+import extractHerokuDatabaseEnvVars from './extractHerokuDatabaseEnvVars';
+
+extractHerokuDatabaseEnvVars();
 
 dotenv.config();
 
