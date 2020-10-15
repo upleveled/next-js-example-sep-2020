@@ -4,9 +4,16 @@ on: push
 jobs:
   build:
     name: yarn jest
+    # Tell the action to use the latest
+    # version of Ubuntu (a Linux flavor)
+    # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
     runs-on: ubuntu-latest
     steps:
+      # Use the official Checkout action:
+      # https://github.com/actions/checkout
       - uses: actions/checkout@v2
+      # Use the official setup-node action:
+      # https://github.com/actions/setup-node
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
