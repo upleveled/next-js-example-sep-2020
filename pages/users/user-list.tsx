@@ -6,16 +6,15 @@ import Layout from '../../components/Layout';
 import { toggleFollowUserInCookie } from '../../util/cookies';
 import { User } from '../../util/types';
 import { GetServerSidePropsContext } from 'next';
+import { mergeUserDataWithFollowingData } from '../../util/userData';
 
- type Props = {
-   followingFromCookie: string[],
-   users: User[]
- }
+type Props = {
+  followingFromCookie: string[];
+  users: User[];
+};
 
-export default function UserList( props: Props) {
-  const [followingFromCookie, setFollowingFromCookie] = useState(
-    props.followingFromCookie,
-  );
+export default function UserList(props: Props) {
+  const [followingList, setFollowingList] = useState(props.followingFromCookie);
 
   const [usersWithFollowingData, setUsersWithFollowingData] = useState(
     props.users,
@@ -25,18 +24,9 @@ export default function UserList( props: Props) {
   // "following" value changes
   useEffect(() => {
     setUsersWithFollowingData(
-      props.users.map((user) => {
-        // If the id of the user is in the
-        // array, then set following to true
-        // followingFromCookie = ['1', '2']
-
-        return {
-          ...user,
-          following: followingFromCookie.includes(user.id),
-        };
-      }),
+      mergeUserDataWithFollowingData(props.users, followingList),
     );
-  }, [props.users, followingFromCookie, setUsersWithFollowingData]);
+  }, [props.users, followingList, setUsersWithFollowingData]);
 
   return (
     <Layout>
@@ -72,7 +62,7 @@ export default function UserList( props: Props) {
                     // Save the "following" attribute of the user
                     // in the cookie
                     const following = toggleFollowUserInCookie(user.id);
-                    setFollowingFromCookie(following);
+                    setFollowingList(following);
                   }
                 }
               >
