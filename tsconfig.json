@@ -25,10 +25,12 @@
   "include": [
     "next-env.d.ts",
     "postgres.d.ts",
+    ".eslintrc.js",
+    "*.config.js",
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
     "db-connect-example-node.mjs"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["cypress", "node_modules"]
 }
