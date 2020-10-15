@@ -3,12 +3,14 @@ import Head from 'next/head';
 import { useState } from 'react';
 import Layout from '../../components/Layout';
 import { User } from '../../util/types';
+import { useRouter } from 'next/router';
 
 type Props = {
   user: User;
 };
 
 export default function SingleUser(props: Props) {
+  const router = useRouter();
   // Tell TypeScript that this state variable may also
   // be a string in the future
   const [editingKey, setEditingKey] = useState<string | null>(null);
@@ -124,6 +126,7 @@ export default function SingleUser(props: Props) {
       <br />
       <br />
       <button
+        data-cy="single-user-delete-button"
         onClick={async () => {
           const answer = window.confirm(
             `Really delete user ${props.user.firstName} ${props.user.lastName}?`,
@@ -136,7 +139,7 @@ export default function SingleUser(props: Props) {
             //
             // A better version would be to save the props.user to a
             // separate state variable and then just set it here to null
-            window.location.reload();
+            router.push('/users/user-list');
           }
         }}
         style={{

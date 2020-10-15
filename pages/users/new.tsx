@@ -41,6 +41,7 @@ export default function NewUser(props: Props) {
         <label style={{ display: 'block' }}>
           firstName
           <input
+            data-cy="new-user-first-name-input"
             value={firstName}
             onChange={(event) => setFirstName(event.currentTarget.value)}
           />
@@ -48,6 +49,7 @@ export default function NewUser(props: Props) {
         <label style={{ display: 'block' }}>
           lastName
           <input
+            data-cy="new-user-last-name-input"
             value={lastName}
             onChange={(event) => setLastName(event.currentTarget.value)}
           />
@@ -55,11 +57,12 @@ export default function NewUser(props: Props) {
         <label style={{ display: 'block' }}>
           city
           <input
+            data-cy="new-user-city-input"
             value={city}
             onChange={(event) => setCity(event.currentTarget.value)}
           />
         </label>
-        <button>New User</button>
+        <button data-cy="new-user-form-button">New User</button>
       </form>
     </Layout>
   );

@@ -8,6 +8,7 @@ export default function Home() {
         <title>Home page</title>
       </Head>
       Some page content on the homepage
+      <br />
       <img src="/laptop.jpg" alt="Laptop computer" />
       {/* <a href="./users/user-list">User List</a> */}
     </Layout>

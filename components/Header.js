@@ -13,10 +13,14 @@ export default function Header() {
       <div>header with some links</div>
       <div style={{ marginRight: -10 }}>
         <Link href="/">
-          <a style={{ padding: '0 10px' }}>Home</a>
+          <a style={{ padding: '0 10px' }} data-cy="header-link-home">
+            Home
+          </a>
         </Link>
         <Link href="/users/user-list">
-          <a style={{ padding: '0 10px' }}>User List</a>
+          <a style={{ padding: '0 10px' }} data-cy="header-link-user-list">
+            User List
+          </a>
         </Link>
       </div>
     </header>

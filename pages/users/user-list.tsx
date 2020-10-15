@@ -36,6 +36,10 @@ export default function UserList(props: Props) {
 
       <h1>User List</h1>
 
+      <p data-cy="user-list-page-description">
+        Here are the currently available users
+      </p>
+
       <ul>
         {usersWithFollowingData.map((user) => {
           return (
@@ -48,6 +52,7 @@ export default function UserList(props: Props) {
               </Link>
 
               <button
+                data-cy={`user-list-follow-user-id-${user.id}`}
                 style={{
                   marginLeft: 15,
                   background: '#ddd',
