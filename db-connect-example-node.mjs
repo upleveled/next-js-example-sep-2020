@@ -17,4 +17,4 @@ const users = await sql`
 
 console.log(users);
 
-process.exit(0);
+sql.end();
