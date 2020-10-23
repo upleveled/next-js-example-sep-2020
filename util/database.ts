@@ -14,7 +14,15 @@ const sql =
       // has an "unauthorized" certificate
       // https://devcenter.heroku.com/changelog-items/852
       postgres({ ssl: { rejectUnauthorized: false } })
-    : postgres();
+    : postgres({
+        // Avoid the error below of using too many connection slots with
+        // Next.js hot reloading
+        //
+        // Example error message:
+        //
+        // Error: remaining connection slots are reserved for non-replication superuser connectionsError: remaining connection slots are reserved for non-replication superuser connections
+        idle_timeout: 5,
+      });
 
 // If you want to use the connection string instead for testing,
 // you can try this:
