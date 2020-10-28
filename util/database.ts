@@ -56,6 +56,18 @@ export async function insertUser(user: User) {
   return users.map((u) => camelcaseKeys(u))[0];
 }
 
+export async function registerUser(username: string, passwordHash: string) {
+  const users = await sql<User[]>`
+    INSERT INTO users
+      (username, password_hash)
+    VALUES
+      (${username}, ${passwordHash})
+    RETURNING *;
+  `;
+
+  return users.map((u) => camelcaseKeys(u))[0];
+}
+
 export async function getUsers() {
   const users = await sql<User[]>`
     SELECT * FROM users;
@@ -78,6 +90,14 @@ export async function getUserById(id: string) {
 
   const users = await sql<User[]>`
     SELECT * FROM users WHERE id = ${id};
+  `;
+
+  return users.map((u) => camelcaseKeys(u))[0];
+}
+
+export async function getUserByUsername(username: string) {
+  const users = await sql<User[]>`
+    SELECT * FROM users WHERE username = ${username};
   `;
 
   return users.map((u) => camelcaseKeys(u))[0];

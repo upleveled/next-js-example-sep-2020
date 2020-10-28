@@ -67,3 +67,16 @@ export default function NewUser(props: Props) {
     </Layout>
   );
 }
+
+export function getServerSideProps() {
+  if (/* user is not logged in */ true) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
+}
