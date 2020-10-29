@@ -1,9 +1,10 @@
+import { Fragment } from 'react';
 import Head from 'next/head';
 import Header from './Header';
 
 export default function Layout(props) {
   return (
-    <>
+    <Fragment>
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -13,6 +14,6 @@ export default function Layout(props) {
       <main style={{ padding: 30 }}>{props.children}</main>
 
       <footer style={{ padding: 30 }}>footer here</footer>
-    </>
+    </Fragment>
   );
 }
