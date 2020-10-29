@@ -1,37 +1,42 @@
 import Link from 'next/link';
+import { css } from '@emotion/core';
+
+const headerStyles = css`
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+  background: #eee;
+  margin-bottom: 40px;
+`;
+
+const headerLinksStyles = css`
+  margin-right: -10px;
+
+  a {
+    padding: 0 10px;
+  }
+`;
 
 export default function Header(props) {
   const loggedInPassed = typeof props.loggedIn !== 'undefined';
 
   return (
-    <header
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        padding: 30,
-        background: '#eee',
-        marginBottom: 40,
-      }}
-    >
+    <header css={headerStyles}>
       <div>header with some links</div>
-      <div style={{ marginRight: -10 }}>
+      <div css={headerLinksStyles}>
         <Link href="/">
-          <a style={{ padding: '0 10px' }} data-cy="header-link-home">
-            Home
-          </a>
+          <a data-cy="header-link-home">Home</a>
         </Link>
         <Link href="/users/user-list">
-          <a style={{ padding: '0 10px' }} data-cy="header-link-user-list">
-            User List
-          </a>
+          <a data-cy="header-link-user-list">User List</a>
         </Link>
         {!loggedInPassed ? null : props.loggedIn ? (
           <Link href="/logout">
-            <a style={{ padding: '0 10px' }}>Log out</a>
+            <a>Log out</a>
           </Link>
         ) : (
           <Link href="/login">
-            <a style={{ padding: '0 10px' }}>Log in</a>
+            <a>Log in</a>
           </Link>
         )}
       </div>

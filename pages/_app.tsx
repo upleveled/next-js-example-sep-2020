@@ -1,15 +1,18 @@
-import '../styles/globals.css';
 import { NextPage } from 'next';
+import globalStyles from '../components/GlobalStyles';
 
 type Props = {
-  Component: NextPage,
-  pageProps: any,
-}
+  Component: NextPage;
+  pageProps: any;
+};
 
-function MyApp(
-  { Component, pageProps }: Props,
-) {
-  return <Component {...pageProps} />;
+function MyApp({ Component, pageProps }: Props) {
+  return (
+    <>
+      {globalStyles}
+      <Component {...pageProps} />
+    </>
+  );
 }
 
 export default MyApp;
