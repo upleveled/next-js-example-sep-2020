@@ -3120,7 +3120,7 @@ cookie-js@^0.0.1:
   resolved "https://registry.yarnpkg.com/cookie-js/-/cookie-js-0.0.1.tgz#4397976bbfabe74fa0d091cb0aa46c3ce9b7d2ac"
   integrity sha1-Q5eXa7+r50+g0JHLCqRsPOm30qw=
 
-cookie@^0.4.0:
+cookie@^0.4.0, cookie@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.1.tgz#afd713fe26ebd21ba95ceb61f9a8116e50a537d1"
   integrity sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==

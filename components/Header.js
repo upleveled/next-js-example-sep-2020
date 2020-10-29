@@ -1,5 +1,8 @@
 import Link from 'next/link';
-export default function Header() {
+
+export default function Header(props) {
+  const loggedInPassed = typeof props.loggedIn !== 'undefined';
+
   return (
     <header
       style={{
@@ -22,6 +25,15 @@ export default function Header() {
             User List
           </a>
         </Link>
+        {!loggedInPassed ? null : props.loggedIn ? (
+          <Link href="/logout">
+            <a style={{ padding: '0 10px' }}>Log out</a>
+          </Link>
+        ) : (
+          <Link href="/login">
+            <a style={{ padding: '0 10px' }}>Log in</a>
+          </Link>
+        )}
       </div>
     </header>
   );

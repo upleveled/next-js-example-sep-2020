@@ -1,7 +1,7 @@
 import postgres from 'postgres';
 import dotenv from 'dotenv';
 import camelcaseKeys from 'camelcase-keys';
-import { User } from './types';
+import { Session, User } from './types';
 import extractHerokuDatabaseEnvVars from './extractHerokuDatabaseEnvVars';
 
 extractHerokuDatabaseEnvVars();
@@ -164,6 +164,61 @@ export async function deleteUserById(id: string) {
     DELETE FROM users
       WHERE id = ${id}
       RETURNING *;
+  `;
+
+  return users.map((u) => camelcaseKeys(u))[0];
+}
+
+export async function getSessionByToken(token: string) {
+  const sessions = await sql<Session[]>`
+    SELECT * FROM sessions WHERE token = ${token};
+  `;
+
+  return sessions.map((s) => camelcaseKeys(s))[0];
+}
+
+export async function deleteSessionByToken(token: string | undefined) {
+  if (typeof token === 'undefined') return;
+  await sql`
+    DELETE FROM sessions WHERE token = ${token};
+  `;
+}
+
+export async function deleteExpiredSessions() {
+  await sql`
+    DELETE FROM sessions WHERE expiry_timestamp < NOW();
+  `;
+}
+
+export async function insertSession(token: string, userId: number) {
+  const sessions = await sql<Session[]>`
+    INSERT INTO sessions
+      (token, user_id)
+    VALUES
+      (${token}, ${userId})
+    RETURNING *;
+  `;
+
+  return sessions.map((s) => camelcaseKeys(s))[0];
+}
+
+// Example of a database query with an Inner Join
+export async function getUserBySessionToken(token: string | undefined) {
+  if (typeof token === 'undefined') return undefined;
+
+  const users = await sql<User[]>`
+    SELECT
+      users.id,
+      users.first_name,
+      users.last_name,
+      users.slug,
+      users.username
+    FROM
+      users,
+      sessions
+    WHERE
+      sessions.token = ${token} AND
+      users.id = sessions.user_id;
   `;
 
   return users.map((u) => camelcaseKeys(u))[0];

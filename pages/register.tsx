@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import { useState } from 'react';
+import Layout from '../components/Layout';
 
 export default function Register(props: { token: string }) {
   const [username, setUsername] = useState('');
@@ -9,7 +11,11 @@ export default function Register(props: { token: string }) {
   const router = useRouter();
 
   return (
-    <>
+    <Layout>
+      <Head>
+        <title>Register</title>
+      </Head>
+
       <h1>Register</h1>
 
       <form
@@ -67,7 +73,7 @@ export default function Register(props: { token: string }) {
       <Link href="/login">
         <a>Login</a>
       </Link>
-    </>
+    </Layout>
   );
 }
 

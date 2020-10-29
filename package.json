@@ -13,6 +13,7 @@
     "@types/js-cookie": "^2.2.6",
     "argon2": "^0.27.0",
     "camelcase-keys": "^6.2.2",
+    "cookie": "^0.4.1",
     "cookie-js": "^0.0.1",
     "csrf": "^3.1.0",
     "dotenv": "^8.2.0",
