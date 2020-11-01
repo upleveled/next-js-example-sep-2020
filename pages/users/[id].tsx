@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
