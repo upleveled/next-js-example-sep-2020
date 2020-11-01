@@ -2,7 +2,7 @@ import { User } from './types';
 
 export function mergeUserDataWithFollowingData(
   users: User[],
-  followingList: string[],
+  followingList: number[],
 ) {
   return users.map((user) => {
     // If the id of the user is in the

@@ -9,7 +9,7 @@ import { GetServerSidePropsContext } from 'next';
 import { mergeUserDataWithFollowingData } from '../../util/userData';
 
 type Props = {
-  followingFromCookie: string[];
+  followingFromCookie: number[];
   users: User[];
 };
 
