@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Layout from '../../components/Layout';
@@ -60,7 +60,7 @@ export default function SingleUser(props: Props) {
           edit
         </button>
       ) : (
-        <Fragment>
+        <>
           <button
             onClick={async () => {
               await fetch(`/api/users/${props.user.id}`, {
@@ -83,7 +83,7 @@ export default function SingleUser(props: Props) {
           >
             cancel
           </button>
-        </Fragment>
+        </>
       )}
       <br />
       <h2>user lastName</h2>
@@ -104,7 +104,7 @@ export default function SingleUser(props: Props) {
           edit
         </button>
       ) : (
-        <Fragment>
+        <>
           <button
             onClick={() => {
               setEditingKey(null);
@@ -121,7 +121,7 @@ export default function SingleUser(props: Props) {
           >
             cancel
           </button>
-        </Fragment>
+        </>
       )}
       <br />
       <br />
