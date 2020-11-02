@@ -4,14 +4,20 @@ jobs:
   cypress-run:
     runs-on: ubuntu-16.04
     steps:
+      # Set up PostgreSQL with this GitHub Action:
+      # https://github.com/Harmon758/postgresql-action
       - uses: harmon758/postgresql-action@v1
         with:
           postgresql version: '13'
+          # Use GitHub Encrypted Secrets for the credentials
+          # https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets
           postgresql db: ${{ secrets.PGDATABASE }}
           postgresql user: ${{ secrets.PGUSERNAME }}
           postgresql password: ${{ secrets.PGPASSWORD }}
       - name: Checkout
         uses: actions/checkout@v1
+      # Use Cypress GitHub action to run tests
+      # https://github.com/cypress-io/github-action
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
