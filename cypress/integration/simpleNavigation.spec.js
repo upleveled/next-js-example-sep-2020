@@ -27,8 +27,10 @@ describe('Simple Website Navigation', () => {
     cy.visit('/');
     cy.visit('/users');
     cy.title().should('eq', 'Users');
+    cy.visit('/users/user-list');
+    cy.title().should('eq', 'User list');
     cy.visit('/users/new');
-    cy.title().should('eq', 'New User');
-    cy.get('[data-cy=new-user-first-name-input]').should('be.visible');
+    cy.title().should('eq', 'Login');
+    cy.get('[data-cy=login-username-input]').should('be.visible');
   });
 });

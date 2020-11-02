@@ -46,17 +46,19 @@ export default function Login(props: Props) {
         }}
       >
         <input
+          data-cy="login-username-input"
           value={username}
           onChange={(e) => setUsername(e.currentTarget.value)}
         />
 
         <input
+          data-cy="login-password-input"
           value={password}
           type="password"
           onChange={(e) => setPassword(e.currentTarget.value)}
         />
 
-        <button>Log in</button>
+        <button data-cy="login-button">Log in</button>
       </form>
 
       <p style={{ color: 'red' }}>{errorMessage}</p>

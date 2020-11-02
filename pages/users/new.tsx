@@ -1,7 +1,10 @@
 import Head from 'next/head';
 import { useState } from 'react';
+import nextCookies from 'next-cookies';
 import Layout from '../../components/Layout';
 import { User } from '../../util/types';
+import { GetServerSidePropsContext } from 'next';
+import { isSessionTokenValid } from '../../util/auth';
 
 type Props = {
   user: User;
@@ -68,11 +71,13 @@ export default function NewUser(props: Props) {
   );
 }
 
-export function getServerSideProps() {
-  if (/* user is not logged in */ true) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { session: token } = nextCookies(context);
+
+  if (!(await isSessionTokenValid(token))) {
     return {
       redirect: {
-        destination: '/login',
+        destination: '/login?returnTo=/users/new',
         permanent: false,
       },
     };

@@ -55,17 +55,19 @@ export default function Register(props: { token: string }) {
         }}
       >
         <input
+          data-cy="register-username-input"
           value={username}
           onChange={(e) => setUsername(e.currentTarget.value)}
         />
 
         <input
+          data-cy="register-password-input"
           value={password}
           type="password"
           onChange={(e) => setPassword(e.currentTarget.value)}
         />
 
-        <button>Register</button>
+        <button data-cy="register-button">Register</button>
       </form>
 
       <p style={{ color: 'red' }}>{errorMessage}</p>
