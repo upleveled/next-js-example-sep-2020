@@ -4,27 +4,6 @@ const authUser = {
 };
 
 describe('User Management', () => {
-  it('Allows User Following', () => {
-    cy.visit('/users/user-list');
-
-    cy.get(
-      // Warning: This selector could lead to
-      // a flaky test
-      '[data-cy=user-list-follow-user-id-3]',
-    )
-      .should('be.visible')
-      .contains('Follow')
-      .click()
-      .contains('Unfollow');
-
-    cy.reload();
-
-    cy.get('[data-cy=user-list-follow-user-id-3]')
-      .contains('Unfollow')
-      .click()
-      .contains('Follow');
-  });
-
   it('Allows User Creation on /register and login on /login', () => {
     cy.visit('/register');
 
@@ -70,5 +49,26 @@ describe('User Management', () => {
 
     // Check that the URL matches "/users/user-list"
     cy.location('pathname').should('match', /\/users\/user-list$/);
+  });
+
+  it('Allows User Following', () => {
+    cy.visit('/users/user-list');
+
+    cy.get(
+      // Warning: This selector could lead to
+      // a flaky test
+      '[data-cy=user-list-follow-user-id-3]',
+    )
+      .should('be.visible')
+      .contains('Follow')
+      .click()
+      .contains('Unfollow');
+
+    cy.reload();
+
+    cy.get('[data-cy=user-list-follow-user-id-3]')
+      .contains('Unfollow')
+      .click()
+      .contains('Follow');
   });
 });
