@@ -21,6 +21,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
+          build: yarn migrate up
           start: yarn dev
         env:
           PGHOST: localhost
