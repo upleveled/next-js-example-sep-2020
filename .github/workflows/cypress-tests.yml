@@ -2,7 +2,7 @@ name: End-to-end tests
 on: [push]
 jobs:
   cypress-run:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-20.04
     steps:
       # Set up PostgreSQL with this GitHub Action:
       # https://github.com/Harmon758/postgresql-action
