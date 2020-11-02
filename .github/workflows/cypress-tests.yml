@@ -18,6 +18,8 @@ jobs:
           build: npm run heroku-postbuild
           start: npm start
         env:
+          PGHOST: localhost
           PGDATABASE: ${{ secrets.PGDATABASE }}
           PGUSERNAME: ${{ secrets.PGUSERNAME }}
           PGPASSWORD: ${{ secrets.PGPASSWORD }}
+          CSRF_TOKEN_SECRET: ${{ secrets.CSRF_TOKEN_SECRET }}
