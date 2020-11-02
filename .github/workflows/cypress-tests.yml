@@ -4,6 +4,12 @@ jobs:
   cypress-run:
     runs-on: ubuntu-16.04
     steps:
+      - uses: harmon758/postgresql-action@v1
+        with:
+          postgresql version: '13'
+          postgresql db: ${{ secrets.PGDATABASE }}
+          postgresql user: ${{ secrets.PGUSERNAME }}
+          postgresql password: ${{ secrets.PGPASSWORD }}
       - name: Checkout
         uses: actions/checkout@v1
       - name: Cypress run
@@ -11,3 +17,7 @@ jobs:
         with:
           build: npm run build
           start: npm start
+        env:
+          PGDATABASE: ${{ secrets.PGDATABASE }}
+          PGUSERNAME: ${{ secrets.PGUSERNAME }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD }}
