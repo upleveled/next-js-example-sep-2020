@@ -1,7 +1,7 @@
 exports.up = async (sql) => {
   await sql`
     ALTER TABLE users
-      ADD COLUMN username varchar(40) UNIQUE;
+      ADD COLUMN username VARCHAR(40) UNIQUE;
   `;
 };
 

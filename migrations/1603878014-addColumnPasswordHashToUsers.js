@@ -1,7 +1,7 @@
 exports.up = async (sql) => {
   await sql`
     ALTER TABLE users
-      ADD COLUMN password_hash varchar(100);
+      ADD COLUMN password_hash VARCHAR(100);
   `;
 };
 

@@ -1,7 +1,7 @@
 exports.up = async (sql) => {
   await sql`
     ALTER TABLE users
-      ADD COLUMN location varchar(40);
+      ADD COLUMN location VARCHAR(40);
   `;
 };
 
