@@ -1,7 +1,7 @@
 exports.up = async (sql) => {
   await sql`
     CREATE TABLE IF NOT EXISTS users (
-      id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+      id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
       first_name VARCHAR(40),
       last_name VARCHAR(40)
     );
