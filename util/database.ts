@@ -10,16 +10,12 @@ dotenv.config();
 
 const sql =
   process.env.NODE_ENV === 'production'
-    ? // Heroku needs SSL connections but
-      // has an "unauthorized" certificate
-      // https://devcenter.heroku.com/changelog-items/852
+    ? // "Unless you're using a Private or Shield Heroku Postgres database, Heroku Postgres does not currently support verifiable certificates"
+      // https://help.heroku.com/3DELT3RK/why-can-t-my-third-party-utility-connect-to-heroku-postgres-with-ssl
       postgres({ ssl: { rejectUnauthorized: false } })
     : postgres({
         // Avoid the error below of using too many connection slots with
-        // Next.js hot reloading
-        //
-        // Example error message:
-        //
+        // Next.js hot reloading:
         // Error: remaining connection slots are reserved for non-replication superuser connectionsError: remaining connection slots are reserved for non-replication superuser connections
         idle_timeout: 5,
       });
