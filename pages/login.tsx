@@ -71,10 +71,10 @@ export default function Login(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  // Redirect from HTTP to HTTPS on Heroku
   if (
     context.req.headers.host &&
-    context.req.headers.referer &&
-    !context.req.headers.referer?.startsWith('https') &&
+    context.req.headers['x-forwarded-proto'] &&
     context.req.headers['x-forwarded-proto'] !== 'https'
   ) {
     return {
