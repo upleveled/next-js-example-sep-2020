@@ -1,11 +1,11 @@
+import { GetServerSidePropsContext } from 'next';
+import nextCookies from 'next-cookies';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import nextCookies from 'next-cookies';
-import { GetServerSidePropsContext } from 'next';
-import Head from 'next/head';
-import { isSessionTokenValid } from '../util/auth';
 import Layout from '../components/Layout';
+import { isSessionTokenValid } from '../util/auth';
 
 type Props = { loggedIn: boolean; redirectDestination: string };
 
@@ -71,6 +71,18 @@ export default function Login(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  console.log(context.req.headers.referer);
+  console.log(context.req.headers);
+  console.log(context.req.rawHeaders);
+  // if (!context.req.headers.host?.startsWith('localhost')) {
+  //   return {
+  //     redirect: {
+  //       destination: redirectDestination,
+  //       permanent: false,
+  //     },
+  //   };
+  // }
+
   const { session: token } = nextCookies(context);
 
   const redirectDestination = context?.query?.returnTo ?? '/';
