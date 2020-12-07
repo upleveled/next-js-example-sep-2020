@@ -71,17 +71,19 @@ export default function Login(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  console.log(context.req.headers.referer);
-  console.log(context.req.headers);
-  console.log(context.req.rawHeaders);
-  // if (!context.req.headers.host?.startsWith('localhost')) {
-  //   return {
-  //     redirect: {
-  //       destination: redirectDestination,
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+  if (
+    context.req.headers.host &&
+    context.req.headers.referer &&
+    !context.req.headers.referer?.startsWith('https') &&
+    context.req.headers['x-forwarded-proto'] !== 'https'
+  ) {
+    return {
+      redirect: {
+        destination: `https://${context.req.headers.host}/login`,
+        permanent: true,
+      },
+    };
+  }
 
   const { session: token } = nextCookies(context);
 
